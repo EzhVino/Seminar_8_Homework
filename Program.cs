@@ -186,3 +186,67 @@ if (columnsFirst == rowsSecond)
 else
     Console.WriteLine("Can't multiply matrices. Number of columns in first matrix should be equal to number of rows in second matrix");
 
+// СФОРМИРОВАТЬ ТРЕХМЕРНЫЙ МАССИВ ИЗ НЕПОВТОРЯЮЩИХСЯ ДВУЗНАЧНЫХ ЧИСЕЛ. ВЫВЕСТИ ПОСТРОЧНО МАССИВ ДОБАВЛЯЯ ИНДЕКСЫ ДЛЯ КАЖДОГО ЭЛЕМЕНТА
+
+int ReplaceRepeatedNumber(int[,,] array, int number)
+{
+    int newNumber = number;
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            for (int k = 0; k < array.GetLength(2); k++)
+            {
+                if (array[i, j, k] == number)
+                    number = new Random().Next(10, 100);
+            }
+        }
+    }
+    return newNumber;
+}
+
+int[,,] Create3DArray(int m, int n, int l)
+{
+    int[,,] collection = new int[m, n, l];
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            for (int k = 0; k < l; k++)
+            {
+                int element = new Random().Next(10, 100);
+                collection[i, j, k] = ReplaceRepeatedNumber(collection, element);
+
+            }
+        }
+    }
+            return collection;
+}
+
+void Show3DArray(int[,,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            for (int k = 0; k < array.GetLength(2); k++)
+            {
+                Console.WriteLine($"element {i}{j}{k}: {array[i, j, k]} ");
+            }
+        }
+    }
+}
+
+Console.WriteLine("Enter number of rows:");
+int rows = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("Enter number of columns:");
+int columns = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("Enter number of layers:");
+int layers = Convert.ToInt32(Console.ReadLine());
+
+if (rows*columns*layers<100)
+{
+    int[,,] myArray = Create3DArray(rows, columns, layers);
+    Show3DArray(myArray);
+}
+else Console.WriteLine("Incorrect size of the massive");
