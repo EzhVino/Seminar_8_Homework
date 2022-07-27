@@ -121,3 +121,68 @@ if (rows != columns)
 }
 else Console.WriteLine("Error. Please enter variable number of rows and columns.");
 
+// ВЫВЕСТИ ПРОИЗВЕДЕНИЕ ДВУХ МАТРИЦ
+
+int[,] CreateMatrix(int m, int n, int min, int max)
+{
+    int[,] matrix = new int[m, n];
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            matrix[i, j] = new Random().Next(min, max + 1);
+        }
+    }
+    return matrix;
+}
+
+void ShowMatrix(int[,] matrix)
+{
+    for (int i = 0; i < matrix.GetLength(0); i++)
+    {
+        for (int j = 0; j < matrix.GetLength(1); j++)
+        {
+            Console.Write($"{matrix[i, j]} ");
+        }
+        Console.WriteLine();
+    }
+}
+
+int[,] MergeMatrix(int[,] matrixOne, int[,] matrixTwo)
+{
+    int[,] newMatrix = new int[matrixOne.GetLength(0), matrixTwo.GetLength(1)];
+
+    for (int i = 0; i < matrixOne.GetLength(0); i++)
+    {
+        for (int j = 0; j < matrixTwo.GetLength(1); j++)
+        {
+            for (int k = 0; k < matrixTwo.GetLength(0); ++k)
+            {
+                newMatrix[i, j] += matrixOne[i, k] * matrixTwo[k, j];
+            }
+        }
+    }
+    return newMatrix;
+}
+
+Console.WriteLine("Enter number of rows for matrix 1:");
+int rowsFirst = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("Enter number of columns for matrix 1:");
+int columnsFirst = Convert.ToInt32(Console.ReadLine());
+int[,] matrixFirst = CreateMatrix(rowsFirst, columnsFirst, 1, 50);
+ShowMatrix(matrixFirst);
+
+Console.WriteLine("Enter number of rows for matrix 2:");
+int rowsSecond = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("Enter number of columns for matrix 2:");
+int columnsSecond = Convert.ToInt32(Console.ReadLine());
+int[,] matrixSecond = CreateMatrix(rowsSecond, columnsSecond, 1, 60);
+ShowMatrix(matrixSecond);
+
+Console.WriteLine();
+
+if (columnsFirst == rowsSecond)
+    ShowMatrix(MergeMatrix(matrixFirst, matrixSecond));
+else
+    Console.WriteLine("Can't multiply matrices. Number of columns in first matrix should be equal to number of rows in second matrix");
+
